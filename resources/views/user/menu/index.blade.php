@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <h5>{{ $item->nama_produk }}</h5>
                         <p class="card-text">@rupiah($item->harga)</p>
-                        <button class="btn btn-primary">Order</button>
+                        <button class="btn btn-danger">Order</button>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <h5>{{ $item->nama_produk }}</h5>
                         <p class="card-text">@rupiah($item->harga)</p>
-                        <button class="btn btn-primary">Order</button>
+                        <button class="btn btn-danger">Order</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <h5>{{ $item->nama_produk }}</h5>
                         <p class="card-text">@rupiah($item->harga)</p>
-                        <button class="btn btn-primary">Order</button>
+                        <button class="btn btn-danger">Order</button>
                     </div>
                 </div>
             </div>

@@ -171,7 +171,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button style="border-radius: 1cm" class="btn btn-primary w-100 py-3" type="submit">Simpan
+                        <button style="border-radius: 1cm" class="btn btn-danger w-100 py-3" type="submit">Simpan
                             Data</button>
                     </div>
                 </div>
@@ -219,7 +219,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button style="border-radius: 1cm" class="btn btn-primary w-100 py-3" type="submit">Ubah
+                        <button style="border-radius: 1cm" class="btn btn-danger w-100 py-3" type="submit">Ubah
                             Password</button>
                     </div>
                 </div>

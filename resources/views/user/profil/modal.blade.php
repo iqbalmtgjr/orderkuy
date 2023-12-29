@@ -26,7 +26,7 @@
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <div class="row mb-2">
-                    <button type="submit" style="border-radius:17px;" class="btn btn-primary">Ganti Foto
+                    <button type="submit" style="border-radius:17px;" class="btn btn-danger">Ganti Foto
                         Profile</button>
                 </div>
             </div>

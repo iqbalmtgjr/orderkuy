@@ -77,9 +77,6 @@ body {
   /* padding: 16px 32px; */
 }
 
-#profil {
-  margin-top: 50px;
-}
 
 #fotoprofil {
   width:150px;
@@ -156,6 +153,9 @@ section {
 @media (max-width: 575px) {
   .breadcrumbs {
     margin-top: 70px;
+  }
+  #profil {
+    margin-top: 50px;
   }
 }
 
@@ -288,6 +288,10 @@ section {
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
+
+  #profil {
+    margin-top: 50px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -304,6 +308,10 @@ section {
 @media (max-width: 575px) {
   .header {
     height: 70px;
+  }
+
+  #profil {
+    margin-top: 50px;
   }
 }
 

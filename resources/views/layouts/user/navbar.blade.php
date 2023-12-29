@@ -6,13 +6,17 @@
 
             <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto me-lg-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <img src="{{ asset('assets/img/logo.png') }}" alt="">
                 <h1>OrderKuy<span>!</span></h1>
             </a>
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="{{ url('/') }}"><i class="bi bi-house-door-fill"></i>&nbsp;Home</a></li>
+                    @guest
+                        <li><a href="{{ url('/') }}"><i class="bi bi-house-door-fill"></i>&nbsp;Home</a></li>
+                    @else
+                        <li><a href="{{ url('/home') }}"><i class="bi bi-house-door-fill"></i>&nbsp;Home</a></li>
+                    @endguest
                     <li><a href="{{ url('/') }}"><i class="bi bi-heart-fill"></i>&nbsp;Menu Favorit</a></li>
                     <li><a href="{{ url('/') }}"><i class="bi bi-journal-text"></i>&nbsp;Booking Meja</a></li>
                     <li><a href="{{ url('/') }}"><i class="bi bi-clock-history"></i>&nbsp;Riwayat</a></li>

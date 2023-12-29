@@ -15,17 +15,17 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--begin::Head-->
 
 <head>
-    <base href="../../../">
+    <base href="../../../../">
     <meta charset="utf-8" />
     <title>Halaman Login | OrderKuy!</title>
-    <meta name="description" content="Login page example" />
+    <meta name="description" content="Singin page example" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://keenthemes.com/metronic" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Page Custom Styles(used by this page)-->
-    <link href="{{ asset('admin/css/pages/login/login-1.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/css/pages/login/login-3.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Custom Styles-->
     <!--begin::Global Theme Styles(used by all pages)-->
     <link href="{{ asset('admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -38,7 +38,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('admin/css/themes/layout/brand/dark.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="{{ asset('admin/media/logos/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -48,56 +48,63 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
         <!--begin::Login-->
-        <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white"
-            id="kt_login">
+        <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
-            <div class="login-aside d-flex flex-column flex-row-auto" style="background-color: #F2C98A;">
+            <div class="login-aside d-flex flex-column flex-row-auto">
                 <!--begin::Aside Top-->
                 <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                     <!--begin::Aside header-->
-                    <a href="#" class="text-center mb-10">
-                        <img src="{{ asset('admin/media/logos/logo-letter-1.png') }}" class="max-h-70px"
-                            alt="" />
+                    <a href="{{ url('/') }}" class="login-logo text-center pt-lg-25 pb-10">
+                        <img src="{{ asset('assets/img/logo.png') }}" class="max-h-70px" alt="" />
                     </a>
                     <!--end::Aside header-->
-                    <!--begin::Aside title-->
-                    <h3 class="font-weight-bolder text-center font-size-h4 font-size-h1-lg" style="color: #986923;">
-                        Order makanan dan minuman menjadi lebih mudah
+                    <!--begin::Aside Title-->
+                    <h3 class="font-weight-bolder text-center font-size-h4 text-dark-50 line-height-xl">Order makanan
+                        dan minuman menjadi lebih mudah <br>
                         dengan <strong>OrderKuy!</strong>
                     </h3>
-                    <!--end::Aside title-->
+                    <!--end::Aside Title-->
                 </div>
                 <!--end::Aside Top-->
                 <!--begin::Aside Bottom-->
-                <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center"
-                    style="background-image: url(admin/media/svg/illustrations/login-visual-1.svg)"></div>
+                <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center"
+                    style="background-position-y: calc(100% + 5rem); background-image: url(admin/media/svg/illustrations/login-visual-5.svg)">
+                </div>
                 <!--end::Aside Bottom-->
             </div>
             <!--begin::Aside-->
             <!--begin::Content-->
-            <div
-                class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
-                <!--begin::Content body-->
-                <div class="d-flex flex-column-fluid flex-center">
+            <div class="login-content flex-row-fluid d-flex flex-column p-10">
+                <!--begin::Top-->
+                {{-- <div class="text-right d-flex justify-content-center">
+                    <div class="top-signin text-right d-flex justify-content-end pt-5 pb-lg-0 pb-10">
+                        <span class="font-weight-bold text-muted font-size-h4">Having issues?</span>
+                        <a href="javascript:;" class="font-weight-bold text-primary font-size-h4 ml-2"
+                            id="kt_login_signup">Get Help</a>
+                    </div>
+                </div> --}}
+                <!--end::Top-->
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-row-fluid flex-center">
                     <!--begin::Signin-->
-                    <div class="login-form login-signin">
+                    <div class="login-form">
                         <!--begin::Form-->
                         <form method="POST" action="{{ route('login') }}" class="form" novalidate="novalidate">
                             @csrf
                             <!--begin::Title-->
-                            <div class="pb-13 pt-lg-0 pt-5">
-                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Selamat Datang di
-                                    OrderKuy!</h3>
-                                <span class="text-muted font-weight-bold font-size-h4">Belum daftar?
-                                    <a href="{{ url('register') }}" id="kt_login_signup"
-                                        class="text-primary font-weight-bolder">Daftar Akun Sekarang</a></span>
+                            <div class="pb-5 pb-lg-15">
+                                <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Masuk</h3>
+                                <div class="text-muted font-weight-bold font-size-h4">Belum daftar?
+                                    <a href="{{ url('/register') }}" class="text-primary font-weight-bolder">Daftar
+                                        Akun Sekarang</a>
+                                </div>
                             </div>
                             <!--begin::Title-->
                             <!--begin::Form group-->
                             <div class="form-group">
                                 <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
                                 <input
-                                    class="@error('email') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg"
+                                    class="@error('email') is-invalid @enderror form-control h-auto py-7 px-6 rounded-lg border-0"
                                     type="email" name="email" value="{{ old('email') }}" autocomplete="email" />
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -110,12 +117,12 @@ License: You must have a valid license purchased only from themeforest(the above
                             <div class="form-group">
                                 <div class="d-flex justify-content-between mt-n5">
                                     <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
-                                    <a href="javascript:;"
-                                        class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-                                        id="kt_login_forgot">Lupa Password ?</a>
+                                    <a href="custom/pages/login/login-3/forgot.html"
+                                        class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Lupa
+                                        Password ?</a>
                                 </div>
                                 <input
-                                    class="@error('password') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg"
+                                    class="@error('password') is-invalid @enderror form-control h-auto py-7 px-6 rounded-lg border-0"
                                     type="password" name="password" autocomplete="off" />
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -126,7 +133,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!--end::Form group-->
                             <!--begin::Action-->
                             <div class="pb-lg-0 pb-5">
-                                <button type="submit" id="kt_login_signin_submit"
+                                <button type="submit" id="kt_login_singin_form_submit_button"
                                     class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Masuk</button>
                                 <a href="{{ route('auth.google') }}"
                                     class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
@@ -148,138 +155,15 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 fill="#EB4335" />
                                         </svg>
                                         <!--end::Svg Icon-->
-                                    </span>Masuk dengan Google</a>
+                                    </span>Masuk Dengan Google</a>
                             </div>
                             <!--end::Action-->
                         </form>
                         <!--end::Form-->
                     </div>
                     <!--end::Signin-->
-                    <!--begin::Signup-->
-                    <div class="login-form login-signup">
-                        <!--begin::Form-->
-                        <form method="POST" action="{{ route('register') }}" class="form"
-                            novalidate="novalidate" id="kt_login_signup_form">
-                            @csrf
-                            <!--begin::Title-->
-                            <div class="pb-13 pt-lg-0 pt-5">
-                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Daftar Akun</h3>
-                                <p class="text-muted font-weight-bold font-size-h4">Masukkan Identitasmu Disini</p>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Form group-->
-                            <div class="form-group">
-                                <input
-                                    class="@error('name') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                    type="text" placeholder="Nama Lengkap" value="{{ old('name') }}"
-                                    name="name" autocomplete="off" />
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            <div class="form-group">
-                                <input
-                                    class="@error('email') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                    type="email" placeholder="Email" value="{{ old('email') }}" name="email"
-                                    autocomplete="off" />
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            <div class="form-group">
-                                <input
-                                    class="@error('password') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                    type="password" placeholder="Password" name="password" autocomplete="off" />
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            <div class="form-group">
-                                <input
-                                    class="@error('password_confirmation') is-invalid @enderror form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                    type="password" placeholder="Konfirmasi password" name="cpassword"
-                                    autocomplete="off" />
-                            </div>
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            {{-- <div class="form-group">
-                                <label class="checkbox mb-0">
-                                    <input type="checkbox" name="agree" />
-                                    <span></span>
-                                    <div class="ml-2">I Agree the
-                                        <a href="#">terms and conditions</a>.
-                                    </div>
-                                </label>
-                            </div> --}}
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
-                                <button type="submit"
-                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Daftar</button>
-                                <button type="button" id="kt_login_signup_cancel"
-                                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Batal</button>
-                            </div>
-                            <!--end::Form group-->
-                        </form>
-                        <!--end::Form-->
-                    </div>
-                    <!--end::Signup-->
-                    <!--begin::Forgot-->
-                    <div class="login-form login-forgot">
-                        <!--begin::Form-->
-                        <form class="form" novalidate="novalidate" id="kt_login_forgot_form">
-                            <!--begin::Title-->
-                            <div class="pb-13 pt-lg-0 pt-5">
-                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Forgotten
-                                    Password ?</h3>
-                                <p class="text-muted font-weight-bold font-size-h4">Enter your email to reset your
-                                    password</p>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Form group-->
-                            <div class="form-group">
-                                <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                    type="email" placeholder="Email" name="email" autocomplete="off" />
-                            </div>
-                            <!--end::Form group-->
-                            <!--begin::Form group-->
-                            <div class="form-group d-flex flex-wrap pb-lg-0">
-                                <button type="button" id="kt_login_forgot_submit"
-                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
-                                <button type="button" id="kt_login_forgot_cancel"
-                                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Cancel</button>
-                            </div>
-                            <!--end::Form group-->
-                        </form>
-                        <!--end::Form-->
-                    </div>
-                    <!--end::Forgot-->
                 </div>
-                <!--end::Content body-->
-                <!--begin::Content footer-->
-                <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
-                    <div class="text-dark-50 font-size-lg font-weight-bolder mr-10">
-                        <span class="mr-1">2020©</span>
-                        <a href="http://keenthemes.com/metronic" target="_blank"
-                            class="text-dark-75 text-hover-primary">Keenthemes</a>
-                    </div>
-                    <a href="#" class="text-primary font-weight-bolder font-size-lg">Terms</a>
-                    <a href="#" class="text-primary ml-5 font-weight-bolder font-size-lg">Plans</a>
-                    <a href="#" class="text-primary ml-5 font-weight-bolder font-size-lg">Contact Us</a>
-                </div>
-                <!--end::Content footer-->
+                <!--end::Wrapper-->
             </div>
             <!--end::Content-->
         </div>
@@ -357,7 +241,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="{{ asset('admin/js/scripts.bundle.js') }}"></script>
     <!--end::Global Theme Bundle-->
     <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ asset('admin/js/pages/custom/login/login-general.js') }}"></script>
+    <script src="{{ asset('admin/js/pages/custom/login/login-3.js') }}"></script>
     <!--end::Page Scripts-->
 </body>
 <!--end::Body-->
