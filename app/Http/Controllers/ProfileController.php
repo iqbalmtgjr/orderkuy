@@ -48,14 +48,15 @@ class ProfileController extends Controller
         ]);
 
         if ($validator->fails()) {
+            toastr()->error('Ada kesalahan saat penginputan data!');
             return redirect('profile')
                 ->withErrors($validator)
-                ->withInput()
-                ->with('gagal', 'Ada Kesalahan Saat Penginputan!');
+                ->withInput();
+            // ->with('gagal', 'Ada Kesalahan Saat Penginputan!');
         }
 
         // Retrieve the validated input...
-        $validated = $validator->validated();
+        $validator->validated();
 
 
         try {
@@ -126,13 +127,13 @@ class ProfileController extends Controller
         }
 
         // Hapus Avatar Lama
-        $path = public_path('assets/img/' . Auth::user()->avatar);
+        $path = public_path('assets/img/profile/' . Auth::user()->avatar);
         if (file_exists($path)) {
             @unlink($path);
         }
 
         $avatar = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $request->file('avatar')->getClientOriginalName());
-        $request->file('avatar')->move(public_path('assets/img/'), $avatar);
+        $request->file('avatar')->move(public_path('assets/img/profile/'), $avatar);
         User::findOrFail(Auth::user()->id)->update(['avatar' => $avatar]);
 
         return redirect()->back()->with('sukses', 'Berhasil Ganti Foto Profile');

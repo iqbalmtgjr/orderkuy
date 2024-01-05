@@ -10,16 +10,17 @@
                 @if (Auth::user()->avatar == null)
                     <img class="imagee" id="fotoprofil"
                         style="border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
-                        width="15%" src="{{ asset('assets/img/user.png') }}" alt="Foto Profil">
+                        width="15%" src="{{ asset('assets/img/profile/user.png') }}" alt="Foto Profil">
                     <div class="middle">
                         <div class="text"><i class="bi bi-camera-fill"></i></div>
                     </div>
                 @else
                     @if (!empty(Auth::user()->google_id || Auth::user()->facebook_id))
-                        @if (file_exists('assets/img/' . Auth::user()->avatar))
+                        @if (file_exists('assets/img/profile/' . Auth::user()->avatar))
                             <img class="imagee" id="fotoprofil"
                                 style="border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
-                                width="15%" src="{{ asset('assets/img/' . Auth::user()->avatar) }}" alt="Foto Profil">
+                                width="15%" src="{{ asset('assets/img/profile/' . Auth::user()->avatar) }}"
+                                alt="Foto Profil">
                             <div class="middle">
                                 <div class="text"><i class="bi bi-camera-fill"></i></div>
                             </div>
@@ -32,10 +33,11 @@
                             </div>
                         @endif
                     @elseif (!empty(Auth::user()->facebook_id && Auth::user()->google_id))
-                        @if (file_exists('assets/img/' . Auth::user()->avatar))
+                        @if (file_exists('assets/img/profile/' . Auth::user()->avatar))
                             <img class="imagee" id="fotoprofil"
                                 style="border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
-                                width="15%" src="{{ asset('assets/img/' . Auth::user()->avatar) }}" alt="Foto Profil">
+                                width="15%" src="{{ asset('assets/img/profile/' . Auth::user()->avatar) }}"
+                                alt="Foto Profil">
                             <div class="middle">
                                 <div class="text"><i class="bi bi-camera-fill"></i></div>
                             </div>
@@ -48,10 +50,11 @@
                             </div>
                         @endif
                     @else
-                        @if (file_exists('assets/img/' . Auth::user()->avatar))
+                        @if (file_exists('assets/img/profile/' . Auth::user()->avatar))
                             <img class="imagee" id="fotoprofil"
                                 style="border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;"
-                                width="15%" src="{{ asset('assets/img/' . Auth::user()->avatar) }}" alt="Foto Profil">
+                                width="15%" src="{{ asset('assets/img/profile/' . Auth::user()->avatar) }}"
+                                alt="Foto Profil">
                             <div class="middle">
                                 <div class="text"><i class="bi bi-camera-fill"></i></div>
                             </div>
@@ -89,7 +92,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                                value="{{ Auth::user()->pelanggan->username == true ? Auth::user()->pelanggan->username : '' }}">
+                                value="{{ Auth::user()->pelanggan->username == true ? Auth::user()->pelanggan->username : old('username') }}">
                             <label for="username">Username</label>
                             @error('username')
                                 <div class="text-danger ml-3 mt-2">

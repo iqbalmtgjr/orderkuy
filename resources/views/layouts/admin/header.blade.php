@@ -36,7 +36,7 @@
     <link href="{{ asset('admin/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     @yield('header')
-    <link rel="shortcut icon" href={{ asset('assets/img/orderyuklogo.png') }} />
+    <link rel="shortcut icon" href={{ asset('assets/img/favicon.ico') }} />
     {{-- Toastr --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
