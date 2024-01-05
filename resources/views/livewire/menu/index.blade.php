@@ -1,4 +1,15 @@
 <div>
+    @push('header')
+        @livewireStyles
+    @endpush
+    @if (session('sukses'))
+        <?php toastr()->success(session('sukses'), 'Sukses'); ?>
+    @endif
+
+    @if (session('gagal'))
+        <?php toastr()->error(session('gagal'), 'Gagal'); ?>
+    @endif
+
     <div class="row">
         <h2>Menu {{ $toko->nama_toko }}</h2>
         <p>{{ $toko->alamat }}</p>
@@ -17,24 +28,23 @@
                         <h5 class="card-title">{{ $item->nama_produk }}</h5>
                         <p class="card-text">@rupiah($item->harga)</p>
 
-                        @if ($isClicked)
-                            <div class="d-flex align-items-center">
+                        {{-- @if ($isClicked)
+                            <div class="d-flex text-center align-items-center">
                                 <div class="col-md-2">
-                                    <button class="btn btn-outline-primary btn-sm"
+                                    <button class="btn btn-outline-danger btn-sm"
                                         wire:click="decrement({{ $item->id }})">-</button>
                                 </div>
                                 <div class="col-md-1">
                                     <label>{{ $count }}</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-outline-primary btn-sm"
+                                    <button class="btn btn-outline-danger btn-sm"
                                         wire:click="increment({{ $item->id }})">+</button>
                                 </div>
-                                {{-- <button class="btn btn-success btn-sm float-right" wire:click="addToCart({{ $item->id }})"><i class="fas fa-cart-plus"></i></button> --}}
                             </div>
-                        @else
-                            <button wire:click="handleClick({{ $item->id }})" class="btn btn-danger">Order</button>
-                        @endif
+                        @else --}}
+                        <button wire:click="addToCart({{ $item->id }})" class="btn btn-danger">Order</button>
+                        {{-- @endif --}}
                     </div>
                 </div>
             </div>
@@ -78,4 +88,23 @@
             </div>
         @endforeach
     </div>
+
+    {{-- @push('footer') --}}
+    {{-- @livewireScripts --}}
+    @script
+        <script type="text/javascript">
+            $wire.on('cart-stored', (data) => {
+                toastr.success(data[0].message, 'Sukses');
+            });
+        </script>
+    @endscript
+    {{-- <script>
+        document.addEventListener('livewire:load', function() {
+            $wire.on('cart-stored', function(data) {
+                console.log('bisa')
+                toastr.success(data.message);
+            });
+        });
+    </script> --}}
+    {{-- @endpush --}}
 </div>

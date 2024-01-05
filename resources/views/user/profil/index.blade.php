@@ -1,5 +1,4 @@
 @extends('layouts.user.apps')
-
 @section('content')
     <div class="row">
         <h1>AKUN SAYA</h1>
@@ -79,8 +78,8 @@
                     <h3>Data Lengkap</h3>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Nama Lengkap" value="{{ Auth::user()->name }}">
+                            <input type="text" class="form-control" name="name" placeholder="Nama Lengkap"
+                                value="{{ Auth::user()->name }}">
                             <label for="name">Nama Lengkap</label>
                             @error('name')
                                 <div class="text-danger ml-3 mt-2">
@@ -116,7 +115,8 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="number" class="form-control" name="no_hp" id="no_hp"
-                                placeholder="No Handphone" value="{{ Auth::user()->pelanggan->no_hp }}">
+                                placeholder="No Handphone"
+                                value="{{ Auth::user()->pelanggan->no_hp == true ? Auth::user()->pelanggan->no_hp : old('no_hp') }}">
                             <label for="name">No Handphone</label>
                             @error('no_hp')
                                 <div class="text-danger ml-3 mt-2">
@@ -128,7 +128,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                                placeholder="No Handphone" value="{{ Auth::user()->pelanggan->tgl_lahir }}">
+                                value="{{ Auth::user()->pelanggan->tgl_lahir == true ? Auth::user()->pelanggan->tgl_lahir : old('tgl_lahir') }}">
                             <label for="tgl_lahir">Tanggal Lahir</label>
                             @error('tgl_lahir')
                                 <div class="text-danger ml-3 mt-2">
@@ -140,19 +140,17 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <select class="form-select" name="jenis_kelamin" id="jenis_kelamin">
-                                @if (Auth::user()->pelanggan->jenis_kelamin == 'L')
-                                    <option value="">--Pilih Jenis Kelamin--</option>
-                                    <option value="L" selected>Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                @elseif(Auth::user()->pelanggan->jenis_kelamin == 'P')
-                                    <option value="">--Pilih Jenis Kelamin--</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P" selected>Perempuan</option>
+                                <option value="">--Pilih Jenis Kelamin--</option>
+                                <option value="L"
+                                    @if (Auth::user()->pelanggan->jenis_kelamin != null) {{ Auth::user()->pelanggan->jenis_kelamin == 'L' ? 'selected' : '' }}
                                 @else
-                                    <option value="">--Pilih Jenis Kelamin--</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                @endif
+                                    {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }} @endif>
+                                    Laki-laki</option>
+                                <option value="P"
+                                    @if (Auth::user()->pelanggan->jenis_kelamin != null) {{ Auth::user()->pelanggan->jenis_kelamin == 'P' ? 'selected' : '' }}
+                                @else
+                                    {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }} @endif>
+                                    Perempuan</option>
                             </select>
                             <label for="select1">Jenis Kelamin</label>
                             @error('jenis_kelamin')
@@ -164,7 +162,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-floating">
-                            <textarea name="alamat" class="form-control" placeholder="Special Request" id="message" style="height: 100px">{{ Auth::user()->pelanggan->alamat }}</textarea>
+                            <textarea name="alamat" class="form-control" placeholder="Special Request" id="message" style="height: 100px">{{ Auth::user()->pelanggan->alamat == true ? Auth::user()->pelanggan->alamat : old('alamat') }}</textarea>
                             <label for="alamat">Alamat</label>
                             @error('alamat')
                                 <div class="text-danger ml-3 mt-2">
@@ -187,8 +185,8 @@
                     <h3>Ubah Password</h3>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="password" class="form-control" name="password_lama" id="password_lama"
-                                placeholder="Password Lama" value="">
+                            <input type="password" class="form-control" name="password_lama" placeholder="Password Lama"
+                                value="">
                             <label for="password_lama">Password Lama</label>
                             @error('password_lama')
                                 <div class="text-danger ml-3 mt-2">
@@ -199,8 +197,8 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="password" class="form-control" name="password_baru" id="password_baru"
-                                placeholder="Password Baru" value="">
+                            <input type="password" class="form-control" name="password_baru" placeholder="Password Baru"
+                                value="">
                             <label for="password_baru">Password Baru</label>
                             @error('password_baru')
                                 <div class="text-danger ml-3 mt-2">
@@ -212,7 +210,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="password" class="form-control" name="konfirmasi_password"
-                                id="konfirmasi_password" placeholder="Konfirmasi Password" value="">
+                                placeholder="Konfirmasi Password" value="">
                             <label for="konfirmasi_password">Konfirmasi Password</label>
                             @error('konfirmasi_password')
                                 <div class="text-danger ml-3 mt-2">
@@ -229,5 +227,5 @@
             </form>
         </div>
     </div>
+    @include('user.profil.modal')
 @endsection
-@include('user.profil.modal')
