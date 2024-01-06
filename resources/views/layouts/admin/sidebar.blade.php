@@ -4,7 +4,8 @@
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
         <a href="/dashboard" class="brand-logo">
-            <img alt="Logo" src="{{ asset('admin/media/logos/logo-light.png') }}" />
+            <img alt="Logo" style="width: 150px; height: 25px" src="{{ asset('assets/img/logo-text-white.png') }}" />
+            {{-- <h3 style="color: #fff">OrderKuy<span style="color: red">!</span></h3> --}}
         </a>
         <!--end::Logo-->
         <!--begin::Toggle-->

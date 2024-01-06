@@ -18,7 +18,7 @@
                         <li><a href="{{ url('/home') }}"><i class="bi bi-house-door-fill"></i>&nbsp;Home</a></li>
                     @endguest
                     <li><a href="{{ url('/') }}"><i class="bi bi-heart-fill"></i>&nbsp;Menu Favorit</a></li>
-                    <li><a href="{{ url('/') }}"><i class="bi bi-journal-text"></i>&nbsp;Booking Meja</a></li>
+                    <li><a href="#book-a-table"><i class="bi bi-journal-text"></i>&nbsp;Booking Meja</a></li>
                     <li><a href="{{ url('/') }}"><i class="bi bi-clock-history"></i>&nbsp;Riwayat</a></li>
                     @if (auth()->user() == true)
                         <li><a href="menu.html" class="nav-item nav-link"><i class="bi bi-cart-fill"></i><span

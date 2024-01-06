@@ -11,8 +11,13 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 ms-auto">
-                                <input type="hidden" name="daftar_resto_id"
-                                    value="{{ auth()->user()->dapur->toko->id }}">
+                                @if (auth()->user()->role == 'dapur')
+                                    <input type="hidden" name="daftar_resto_id"
+                                        value="{{ auth()->user()->dapur->toko_id }}">
+                                @else
+                                    <input type="hidden" name="daftar_resto_id"
+                                        value="{{ auth()->user()->admin->toko_id }}">
+                                @endif
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Nama Menu</label>
                                     <input type="text" class="form-control" name="nama_produk"
