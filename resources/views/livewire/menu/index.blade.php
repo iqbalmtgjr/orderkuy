@@ -28,7 +28,7 @@
                         <h5 class="card-title">{{ $item->nama_produk }}</h5>
                         <p class="card-text">@rupiah($item->harga)</p>
 
-                        {{-- @if ($isClicked)
+                        @if ($isClicked)
                             <div class="d-flex text-center align-items-center">
                                 <div class="col-md-2">
                                     <button class="btn btn-outline-danger btn-sm"
@@ -42,9 +42,9 @@
                                         wire:click="increment({{ $item->id }})">+</button>
                                 </div>
                             </div>
-                        @else --}}
-                        <button wire:click="addToCart({{ $item->id }})" class="btn btn-danger">Order</button>
-                        {{-- @endif --}}
+                        @else
+                            <button wire:click="addToCart({{ $item->id }})" class="btn btn-danger">Order</button>
+                        @endif
                     </div>
                 </div>
             </div>

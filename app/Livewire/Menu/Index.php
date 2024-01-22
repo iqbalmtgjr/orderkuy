@@ -41,7 +41,7 @@ class Index extends Component
             'harga' => $menu->harga,
         ];
         // dd($menu->nama_produk);
-        // $keranjang = Cart::updateOrCreate($data);
+        $keranjang = Cart::updateOrCreate($data);
 
         // session()->flash('sukses', 'Menu berhasil ditambahkan ke keranjang!');
         $this->dispatch('cart-stored', ['message' => 'Menu ' . $menu->nama_produk . ' berhasil ditambahkan ke keranjang!']);
