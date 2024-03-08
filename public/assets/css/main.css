@@ -292,6 +292,12 @@ section {
   #profil {
     margin-top: 50px;
   }
+
+  .menu-row {
+    width: 33.33%; /* 3 items per row */
+    float: left; /* Ensures items stack horizontally */
+    margin: 0 5px 5px 0; /* Optional spacing */
+  }
 }
 
 /*--------------------------------------------------------------

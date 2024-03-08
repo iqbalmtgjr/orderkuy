@@ -21,8 +21,9 @@
                     <li><a href="#book-a-table"><i class="bi bi-journal-text"></i>&nbsp;Booking Meja</a></li>
                     <li><a href="{{ url('/') }}"><i class="bi bi-clock-history"></i>&nbsp;Riwayat</a></li>
                     @if (auth()->user() == true)
-                        <li><a href="{{ url('/keranjang/' . auth()->user()->id . '') }}" class="nav-item nav-link"><i
-                                    class="bi bi-cart-fill"></i><span class="badge text-bg-danger"
+                        <li><a href="{{ url('/menu/toko/' . auth()->user()->cart->menu->toko_id . '') }}"
+                                class="nav-item nav-link"><i class="bi bi-cart-fill"></i><span
+                                    class="badge text-bg-danger"
                                     style="font-size: 7px">{{ auth()->user()->cart == true ? auth()->user()->cart->count() : '0' }}</span></a>
                         </li>
                         <li class="dropdown"><a href="#"><span>Akun</span> <i

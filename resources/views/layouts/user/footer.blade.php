@@ -85,11 +85,27 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+@livewireScripts
 {{-- Toastr --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-@livewireScripts
-@stack('footer')
+<script>
+    @if (Session::has('sukses'))
+        toastr.success("{{ Session::get('sukses') }}", "Sukses")
+    @endif
 
+    @if (Session::has('gagal'))
+        toastr.error("{{ Session::get('gagal') }}", "Gagal")
+    @endif
+
+    @if (Session::has('peringatan'))
+        toastr.warning("{{ Session::get('peringatan') }}", "Peringatan")
+    @endif
+
+    @if (Session::has('info'))
+        toastr.info("{{ Session::get('info') }}", "Info")
+    @endif
+</script>
+@stack('footer')
 
 </body>
 

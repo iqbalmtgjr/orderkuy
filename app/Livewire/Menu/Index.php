@@ -22,6 +22,7 @@ class Index extends Component
         return view('livewire.menu.index');
     }
 
+    #[On('dataUpdated')]
     public function mount($id)
     {
         $this->toko = Toko::find($id);
@@ -41,18 +42,20 @@ class Index extends Component
             'qty' => 1,
             'harga' => $menu->harga,
         ];
-        // dd($menu->nama_produk);
-        $keranjang = Cart::updateOrCreate($data);
+        if ($data) {
+            $keranjang = Cart::find($data['id']);
+            $keranjang
+        } else {
+            $keranjang = Cart::updateOrCreate($data);
+        }
 
-        // session()->flash('sukses', 'Menu berhasil ditambahkan ke keranjang!');
         $this->dispatch('cart-stored', ['message' => 'Menu ' . $menu->nama_produk . ' berhasil ditambahkan ke keranjang!']);
-        // $this->redirect('/menu/toko/' . $menu->toko->id);
-        // $this->isClicked = true;
+        $this->dispatch('dataUpdated', $keranjang->menu->toko_id);
     }
 
     public function updatedQuantity($productId, $quantity)
     {
-        $this->emit('updateCartQuantity', $productId, $quantity);
+        $this->dispatch('updateCartQuantity', $productId, $quantity);
     }
 
     public function increment($id)
@@ -72,12 +75,5 @@ class Index extends Component
         $updateHarga = $carts->qty * $carts->menu->harga;
 
         $carts->update(['harga' => $updateHarga]);
-    }
-
-    // #[On('cart-stored')]
-    public function handleStored($data)
-    {
-        // dd('sukses');
-        session()->flash('sukses', 'Menu berhasil ditambahkan ke keranjang!');
     }
 }
