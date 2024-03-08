@@ -85,31 +85,42 @@
                         <h6>Pilih Jenis Order</h6>
                     </div>
                     <div class="row text-center px-2">
-                        <div class="col-lg-6">
-                            <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
-                                checked>
-                            <label class="btn btn-md btn-danger col-12" for="option1">Ditempat</label>
+                        <div class="col-lg-6 py-1">
+                            <input wire:click="colorChange(1)" type="radio" class="btn-check" name="options"
+                                id="option1" autocomplete="off">
+                            <label
+                                class="col-12 btn btn-md {{ $selectedOption1 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }}"
+                                for="option1">Ditempat</label>
                         </div>
-                        <div class="col-lg-6">
-                            <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-                            <label class="btn btn-md btn-warning col-12" for="option2">Dibungkus</label>
+                        <div class="col-lg-6 py-1">
+                            <input wire:click="colorChange(0)" type="radio" class="btn-check" name="options"
+                                id="option2" autocomplete="off">
+                            <label
+                                class="btn btn-md {{ $selectedOption2 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }} col-12"
+                                for="option2">Dibungkus</label>
                         </div>
                     </div>
+
                     <div class="row mt-4 px-3">
-                        <table class="table" style="width: 100%">
+                        <table class="table" style="width: 100%; font-size: 14px">
                             <tr>
-                                <th style="width: 40%">Nama Pesanan</th>
+                                <th style="width: 30%">Nama Pesanan</th>
                                 <th>Jumlah</th>
-                                <th style="width: 30%">Harga</th>
+                                <th style="width: 25%">Harga</th>
                             </tr>
                             @foreach ($carts as $cart)
                                 <tr>
-                                    <td style="width: 40%">{{ $cart->menu->nama_produk }}</td>
-                                    <td><input wire:model="quantity{{ $cart->id }}"
-                                            id="quantity-{{ $cart->menu->id }}" class="form-control" style="width: 60%"
-                                            type="number" value="{{ $cart->qty }}">
+                                    <td style="width: 30%">{{ $cart->menu->nama_produk }}</td>
+                                    <td class="d-flex align-items-center align-vertical-center">
+                                        <button wire:click='decrement({{ $cart->id }})'
+                                            style="width: 15%; margin-right: 5%"
+                                            class="btn btn-sm btn-danger">-</button>
+                                        <input class="form-control" style="width: 30%" type="text"
+                                            value="{{ $cart->qty }}">
+                                        <button wire:click='increment({{ $cart->id }})'
+                                            style="width: 15%; margin-left: 5%" class="btn btn-sm btn-danger">+</button>
                                     </td>
-                                    <td style="width: 30%">@rupiah($cart->menu->harga)</td>
+                                    <td style="width: 25%">@rupiah($cart->menu->harga * $cart->qty)</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -143,7 +154,7 @@
     </div>
 
     @push('footer')
-        @livewireScripts
+        {{-- @livewireScripts --}}
         @script
             <script type="text/javascript">
                 $wire.on('cart-stored', (data) => {
@@ -152,37 +163,5 @@
             </script>
         @endscript
 
-        <script>
-            //ubah warna pilih order
-            const option1 = document.getElementById('option1');
-            const option2 = document.getElementById('option2');
-
-            option1.addEventListener('change', function() {
-                if (this.checked) {
-                    console.log('cek1')
-                    document.getElementById('option1').classList.remove('btn-secondary');
-                    document.getElementById('option1').classList.add('btn-danger');
-                    document.getElementById('option2').classList.remove('btn-danger');
-                    document.getElementById('option2').classList.add('btn-secondary');
-                }
-            });
-
-            option2.addEventListener('change', function() {
-                if (this.checked) {
-                    console.log('cek2')
-                    document.getElementById('option2').classList.remove('btn-secondary');
-                    document.getElementById('option2').classList.add('btn-danger');
-                    document.getElementById('option1').classList.remove('btn-danger');
-                    document.getElementById('option1').classList.add('btn-secondary');
-                }
-            });
-
-            //update total harga
-            document.addEventListener('livewire:load', function() {
-                Livewire.on('updateCartQuantity', (productId, quantity) => {
-                    document.querySelector(`#quantity-${productId}`).value = quantity;
-                });
-            });
-        </script>
     @endpush
 </div>

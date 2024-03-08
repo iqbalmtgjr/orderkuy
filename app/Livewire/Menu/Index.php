@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 class Index extends Component
 {
 
-    public $toko, $menu, $makanan, $minuman, $snack, $carts, $productId, $quantity;
+    public $toko, $menu, $makanan, $minuman, $snack, $carts, $productId, $quantity, $selectedOption1, $selectedOption2;
 
     public $count = 1;
 
@@ -33,47 +33,56 @@ class Index extends Component
         $this->carts = Cart::where('user_id', auth()->user()->id)->get();
     }
 
+    public function colorChange($id)
+    {
+        // dd($id);
+        if ($id === 1) {
+            $this->selectedOption1 = "btn-danger";
+            $this->selectedOption2 = "btn-secondary";
+        } else if ($id === 0) {
+            $this->selectedOption2 = "btn-danger";
+            $this->selectedOption1 = "btn-secondary";
+        }
+    }
+
     public function addToCart($id)
     {
         $menu = Menu::find($id);
-        $data = [
+        $keranjang = Cart::where('menu_id', $id)->first();
+        $cart = [
             'user_id' => auth()->user()->id,
             'menu_id' => $id,
             'qty' => 1,
             'harga' => $menu->harga,
         ];
-        if ($data) {
-            $keranjang = Cart::find($data['id']);
-            $keranjang
+
+        if ($keranjang) {
+            $keranjang->increment('qty', 1);
         } else {
-            $keranjang = Cart::updateOrCreate($data);
+            $keranjang = Cart::updateOrCreate($cart);
         }
 
         $this->dispatch('cart-stored', ['message' => 'Menu ' . $menu->nama_produk . ' berhasil ditambahkan ke keranjang!']);
         $this->dispatch('dataUpdated', $keranjang->menu->toko_id);
     }
 
-    public function updatedQuantity($productId, $quantity)
-    {
-        $this->dispatch('updateCartQuantity', $productId, $quantity);
-    }
-
     public function increment($id)
     {
-        $menus = Menu::find($id);
         $carts = Cart::find($id);
         $carts->increment('qty', 1);
-        $updateHarga = $carts->qty * $menus->harga;
 
-        $carts->update(['harga' => $updateHarga]);
+        $this->dispatch('dataUpdated', $carts->menu->toko_id);
     }
 
     public function decrement($id)
     {
         $carts = Cart::find($id);
-        $carts->decrement('qty', 1);
-        $updateHarga = $carts->qty * $carts->menu->harga;
+        if ($carts->qty <= 1) {
+            $carts->delete();
+        } else {
+            $carts->decrement('qty', 1);
+        }
 
-        $carts->update(['harga' => $updateHarga]);
+        $this->dispatch('dataUpdated', $carts->menu->toko_id);
     }
 }
