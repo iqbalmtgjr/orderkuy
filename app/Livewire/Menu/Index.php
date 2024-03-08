@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 class Index extends Component
 {
 
-    public $toko, $menu, $makanan, $minuman, $snack;
+    public $toko, $menu, $makanan, $minuman, $snack, $carts, $productId, $quantity;
 
     public $count = 1;
 
@@ -29,6 +29,7 @@ class Index extends Component
         $this->makanan = Menu::where('toko_id', $id)->where('kategori', 'makanan')->get();
         $this->minuman = Menu::where('toko_id', $id)->where('kategori', 'minuman')->get();
         $this->snack = Menu::where('toko_id', $id)->where('kategori', 'snack')->get();
+        $this->carts = Cart::where('user_id', auth()->user()->id)->get();
     }
 
     public function addToCart($id)
@@ -47,6 +48,11 @@ class Index extends Component
         $this->dispatch('cart-stored', ['message' => 'Menu ' . $menu->nama_produk . ' berhasil ditambahkan ke keranjang!']);
         // $this->redirect('/menu/toko/' . $menu->toko->id);
         // $this->isClicked = true;
+    }
+
+    public function updatedQuantity($productId, $quantity)
+    {
+        $this->emit('updateCartQuantity', $productId, $quantity);
     }
 
     public function increment($id)
