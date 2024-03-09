@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->foreignId('meja_id');
             $table->foreignId('menu_id');
             $table->integer('jumlah');
             $table->integer('jenis_order');
-            $table->string('catatan');
+            $table->string('catatan')->nullable();
             $table->timestamps();
         });
     }

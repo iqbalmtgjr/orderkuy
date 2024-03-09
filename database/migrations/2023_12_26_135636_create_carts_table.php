@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('menu_id');
             $table->integer('qty');
             $table->integer('harga');
+            $table->string('catatan')->nullable();
             $table->timestamps();
         });
     }

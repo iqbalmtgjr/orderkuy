@@ -5,9 +5,9 @@
 
     <div class="row">
         <h2>Menu {{ $toko->nama_toko }}</h2>
-        <p style="margin-top: -10px">{{ $toko->alamat }}</p>
+        <strong class="text-danger" style="margin-top: -10px">{{ $toko->alamat }}</strong>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-lg-8">
             <div class="card py-4 px-4">
                 <div class="row">
@@ -47,9 +47,10 @@
                                     src="{{ asset('assets/img/menu/' . $item->foto . '') }}" class="card-img-top"
                                     alt="...">
                                 <div class="card-body">
-                                    <h5>{{ $item->nama_produk }}</h5>
-                                    <p class="card-text">@rupiah($item->harga)</p>
-                                    <button class="btn btn-danger">Order</button>
+                                    <h5 class="card-title">{{ $item->nama_produk }}</h5>
+                                    <p class="card-text"><strong>@rupiah($item->harga)</strong></p>
+                                    <button wire:click="addToCart({{ $item->id }})"
+                                        class="btn btn-sm btn-danger">Tambah</button>
                                 </div>
                             </div>
                         </div>
@@ -68,9 +69,10 @@
                                 src="{{ asset('assets/img/menu/' . $item->foto . '') }}" class="card-img-top"
                                 alt="...">
                             <div class="card-body">
-                                <h5>{{ $item->nama_produk }}</h5>
-                                <p class="card-text">@rupiah($item->harga)</p>
-                                <button class="btn btn-danger">Order</button>
+                                <h5 class="card-title">{{ $item->nama_produk }}</h5>
+                                <p class="card-text"><strong>@rupiah($item->harga)</strong></p>
+                                <button wire:click="addToCart({{ $item->id }})"
+                                    class="btn btn-sm btn-danger">Tambah</button>
                             </div>
                         </div>
                     </div>
@@ -86,17 +88,27 @@
                     </div>
                     <div class="row text-center px-2">
                         <div class="col-lg-6 py-1">
-                            <input wire:click="colorChange(1)" type="radio" class="btn-check" name="options"
-                                id="option1" autocomplete="off">
+                            <input wire:model='jenisOrder' wire:click="colorChange(1)" type="radio" class="btn-check"
+                                id="option1" autocomplete="off" value="1"
+                                {{ $jenisOrder == 1 ? 'checked' : '' }}>
                             <label
-                                class="col-12 btn btn-md {{ $selectedOption1 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }}"
+                                class="col-12 btn btn-md 
+                                @if ($jenisOrder == 1) {
+                                     {{ 'btn-danger' }}
+                                @else
+                                    {{ $selectedOption1 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }} @endif
+                                "
                                 for="option1">Ditempat</label>
                         </div>
                         <div class="col-lg-6 py-1">
-                            <input wire:click="colorChange(0)" type="radio" class="btn-check" name="options"
-                                id="option2" autocomplete="off">
+                            <input wire:model='jenisOrder' wire:click="colorChange(0)" type="radio" class="btn-check"
+                                id="option2" autocomplete="off" value="0"
+                                {{ $jenisOrder == 0 ? 'checked' : '' }}>
                             <label
-                                class="btn btn-md {{ $selectedOption2 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }} col-12"
+                                class="btn btn-md @if ($jenisOrder == 0) {
+                                    {{ 'btn-danger' }}
+                               @else
+                                   {{ $selectedOption2 == 'btn-danger' ? 'btn-danger' : 'btn-secondary' }} @endif col-12"
                                 for="option2">Dibungkus</label>
                         </div>
                     </div>
@@ -111,14 +123,25 @@
                             @foreach ($carts as $cart)
                                 <tr>
                                     <td style="width: 30%">{{ $cart->menu->nama_produk }}</td>
-                                    <td class="d-flex align-items-center align-vertical-center">
-                                        <button wire:click='decrement({{ $cart->id }})'
-                                            style="width: 15%; margin-right: 5%"
-                                            class="btn btn-sm btn-danger">-</button>
-                                        <input class="form-control" style="width: 30%" type="text"
-                                            value="{{ $cart->qty }}">
-                                        <button wire:click='increment({{ $cart->id }})'
-                                            style="width: 15%; margin-left: 5%" class="btn btn-sm btn-danger">+</button>
+                                    <td>
+                                        <div class="d-flex align-items-center align-content-center align-middle">
+                                            <button wire:click='decrement({{ $cart->id }})'
+                                                style="width: 17%; margin-right: 5%"
+                                                class="btn btn-sm btn-danger">-</button>
+                                            {{-- <input disabled class="form-control text-center" style="width: 30%"
+                                            type="text" value="{{ $cart->qty }}"> --}}
+                                            <strong style="width: 20%"
+                                                class="text-center ">{{ $cart->qty }}</strong>
+                                            <button wire:click='increment({{ $cart->id }})'
+                                                style="width: 17%; margin-left: 5%"
+                                                class="btn btn-sm btn-danger">+</button>
+                                            <button wire:click='note({{ $cart->id }})'
+                                                style="width: 20%; margin-left: 5%"
+                                                class="btn btn-sm btn-secondary text-center" data-bs-toggle="modal"
+                                                data-bs-target="#tambah" data-placement="top"
+                                                title="Tambah dengan catatan"><i
+                                                    class="bi bi-pencil-square"></i></button>
+                                        </div>
                                     </td>
                                     <td style="width: 25%">@rupiah($cart->menu->harga * $cart->qty)</td>
                                 </tr>
@@ -145,11 +168,14 @@
                         </table>
                     </div>
                     <div class="row mt-4 px-3">
-                        <button class="btn btn-danger btn-lg">Order Sekarang</button>
+                        <button wire:click='order({{ empty($carts) ? $carts[0]->user_id : auth()->user()->id }})'
+                            class="btn btn-danger btn-lg">Order
+                            Sekarang</button>
                     </div>
                 </div>
             </div>
         </div>
+        @include('livewire.menu.modalcatatan')
 
     </div>
 
@@ -157,8 +183,12 @@
         {{-- @livewireScripts --}}
         @script
             <script type="text/javascript">
-                $wire.on('cart-stored', (data) => {
+                $wire.on('order-stored', (data) => {
                     toastr.success(data[0].message, 'Sukses');
+                });
+
+                $wire.on('dataUpdated', () => {
+                    $('#tambah').modal('hide');
                 });
             </script>
         @endscript
