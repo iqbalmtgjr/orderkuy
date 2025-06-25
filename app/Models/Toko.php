@@ -18,8 +18,13 @@ class Toko extends Model
         return $this->belongsTo(User::class);
     }
 
-    function menu()
+    public function menu()
     {
         return $this->hasOne(Menu::class);
+    }
+
+    public function meja()
+    {
+        return $this->hasMany(Meja::class);
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('toko_id');
             $table->foreignId('meja_id');
             $table->foreignId('menu_id');
             $table->integer('jumlah');

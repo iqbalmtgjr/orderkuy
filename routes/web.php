@@ -13,6 +13,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PesananController;
 use App\Livewire\Menu\Index;
 
 /*
@@ -105,5 +106,10 @@ Route::group(['middleware' => ['isLogin']], function () {
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword']);
     Route::post('/upload/avatar', [ProfileController::class, 'updateAvatar'])->name('upload.avatar');
     // Route::get('/menu/toko/{id}', [HomeController::class, 'menu'])->name('menu-toko');
+
+    // Pesanan bagian kasir
+    Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
+
+    // Order
     Route::get('/menu/toko/{id}', Index::class);
 });

@@ -49,7 +49,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $item->nama_produk }}</h5>
                                     <p class="card-text"><strong>@rupiah($item->harga)</strong></p>
-                                    <button wire:click="addToCart({{ $item->id }})"
+                                    <button wire:click="addToCart({{ $item->id, $toko->id }})"
                                         class="btn btn-sm btn-danger">Tambah</button>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $item->nama_produk }}</h5>
                                 <p class="card-text"><strong>@rupiah($item->harga)</strong></p>
-                                <button wire:click="addToCart({{ $item->id }})"
+                                <button wire:click="addToCart({{ $item->id, $toko->id }})"
                                     class="btn btn-sm btn-danger">Tambah</button>
                             </div>
                         </div>
@@ -168,7 +168,8 @@
                         </table>
                     </div>
                     <div class="row mt-4 px-3">
-                        <button wire:click='order({{ empty($carts) ? $carts[0]->user_id : auth()->user()->id }})'
+                        <button
+                            wire:click='order({{ empty($carts) ? $carts[0]->user_id : auth()->user()->id }}, {{ $toko->id }})'
                             class="btn btn-danger btn-lg">Order
                             Sekarang</button>
                     </div>

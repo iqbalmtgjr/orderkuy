@@ -13,7 +13,7 @@ use Livewire\Attributes\On;
 class Index extends Component
 {
 
-    public $toko, $menu, $makanan, $minuman, $snack, $carts, $productId, $quantity, $selectedOption1, $selectedOption2, $catatan, $produk, $produk_id, $jenisOrder;
+    public $toko, $menu, $makanan, $minuman, $snack, $carts, $productId, $quantity, $selectedOption1, $selectedOption2, $catatan, $produk, $produk_id, $toko_id, $jenisOrder;
 
     public $count = 1;
 
@@ -86,13 +86,14 @@ class Index extends Component
         $this->dispatch('dataUpdated', $updateNote->menu->toko_id);
     }
 
-    public function addToCart($id)
+    public function addToCart($menu_id)
     {
-        $menu = Menu::find($id);
-        $keranjang = Cart::where('menu_id', $id)->first();
+        $menu = Menu::find($menu_id);
+        $keranjang = Cart::where('menu_id', $menu_id)->first();
         $cart = [
             'user_id' => auth()->user()->id,
-            'menu_id' => $id,
+            'toko_id' => $menu->toko_id,
+            'menu_id' => $menu_id,
             'qty' => 1,
             'harga' => $menu->harga,
         ];
@@ -109,12 +110,13 @@ class Index extends Component
 
     public function order($user_id)
     {
-        dd($this->jenisOrder);
+        // dd($this->jenisOrder);
         $keranjang = Cart::where('user_id', $user_id)->get();
 
         foreach ($keranjang as $key) {
             // if ($key->menu_id == )
             Order::updateOrCreate([
+                'toko_id' => $key->toko_id,
                 'user_id' => $user_id,
                 'meja_id' => 1,
                 'menu_id' => $key->menu_id,
