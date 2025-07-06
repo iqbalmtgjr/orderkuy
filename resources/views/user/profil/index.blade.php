@@ -1,4 +1,3 @@
-@extends('layouts.user.apps')
 @section('content')
     <div class="row">
         <h1>AKUN SAYA</h1>
@@ -91,7 +90,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username"
-                                value="{{ Auth::user()->pelanggan->username == true ? Auth::user()->pelanggan->username : old('username') }}">
+                                value="{{ Auth::user()->pelanggan?->username ?? old('username') }}">
                             <label for="username">Username</label>
                             @error('username')
                                 <div class="text-danger ml-3 mt-2">
@@ -115,8 +114,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="number" class="form-control" name="no_hp" id="no_hp"
-                                placeholder="No Handphone"
-                                value="{{ Auth::user()->pelanggan->no_hp == true ? Auth::user()->pelanggan->no_hp : old('no_hp') }}">
+                                placeholder="No Handphone" value="{{ Auth::user()->pelanggan?->no_hp ?? old('no_hp') }}">
                             <label for="name">No Handphone</label>
                             @error('no_hp')
                                 <div class="text-danger ml-3 mt-2">
@@ -128,7 +126,7 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                                value="{{ Auth::user()->pelanggan->tgl_lahir == true ? Auth::user()->pelanggan->tgl_lahir : old('tgl_lahir') }}">
+                                value="{{ Auth::user()->pelanggan?->tgl_lahir ?? old('tgl_lahir') }}">
                             <label for="tgl_lahir">Tanggal Lahir</label>
                             @error('tgl_lahir')
                                 <div class="text-danger ml-3 mt-2">
@@ -142,15 +140,13 @@
                             <select class="form-select" name="jenis_kelamin" id="jenis_kelamin">
                                 <option value="">--Pilih Jenis Kelamin--</option>
                                 <option value="L"
-                                    @if (Auth::user()->pelanggan->jenis_kelamin != null) {{ Auth::user()->pelanggan->jenis_kelamin == 'L' ? 'selected' : '' }}
-                                @else
-                                    {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }} @endif>
-                                    Laki-laki</option>
+                                    {{ (Auth::user()->pelanggan?->jenis_kelamin ?? old('jenis_kelamin')) == 'L' ? 'selected' : '' }}>
+                                    Laki-laki
+                                </option>
                                 <option value="P"
-                                    @if (Auth::user()->pelanggan->jenis_kelamin != null) {{ Auth::user()->pelanggan->jenis_kelamin == 'P' ? 'selected' : '' }}
-                                @else
-                                    {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }} @endif>
-                                    Perempuan</option>
+                                    {{ (Auth::user()->pelanggan?->jenis_kelamin ?? old('jenis_kelamin')) == 'P' ? 'selected' : '' }}>
+                                    Perempuan
+                                </option>
                             </select>
                             <label for="select1">Jenis Kelamin</label>
                             @error('jenis_kelamin')
@@ -162,7 +158,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-floating">
-                            <textarea name="alamat" class="form-control" placeholder="Special Request" id="message" style="height: 100px">{{ Auth::user()->pelanggan->alamat == true ? Auth::user()->pelanggan->alamat : old('alamat') }}</textarea>
+                            <textarea name="alamat" class="form-control" placeholder="Alamat" id="alamat" style="height: 100px">{{ Auth::user()->pelanggan?->alamat ?? old('alamat') }}</textarea>
                             <label for="alamat">Alamat</label>
                             @error('alamat')
                                 <div class="text-danger ml-3 mt-2">

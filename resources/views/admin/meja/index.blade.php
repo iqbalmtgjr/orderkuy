@@ -12,8 +12,10 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">
                     <div class="card-title">
-                        <h3 class="card-label">Data Meja {{ auth()->user()->admin->toko->nama_toko }}
+                        <h3 class="card-label">
+                            Data Meja {{ auth()->user()->admin?->toko?->nama_toko ?? '—' }}
                         </h3>
+                        
                     </div>
                     <div class="card-toolbar">
                         <!--begin::Button-->

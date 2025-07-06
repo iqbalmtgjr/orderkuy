@@ -14,7 +14,9 @@ class MejaController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Meja::where('toko_id', auth()->user()->admin->toko->id)->get();
+        // $data = Meja::where('toko_id', auth()->user()->admin->toko->id)->get();
+        $tokoId = optional(auth()->user()->admin)->toko_id;
+        $data = Meja::where('toko_id', $tokoId)->get();
         // dd($data);
         if ($request->ajax()) {
             return Datatables::of($data)

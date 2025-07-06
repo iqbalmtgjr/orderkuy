@@ -46,11 +46,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="message-text" class="col-form-label">Toko</label>
-                                    <select class="form-control" name="toko" id="tokoo">
+                                    <select class="form-control" name="toko_id" id="tokoo">
                                         <option value="">-- Pilih Toko --</option>
                                         @foreach ($toko as $item)
-                                            <option value="{{ $item->id }}" @selected(old('toko'))>
-                                                {{ $item->nama_toko }}</option>
+                                            <option value="{{ $item->id }}" @selected(old('toko_id') == $item->id)>
+                                                {{ $item->nama_toko }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('role')
