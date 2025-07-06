@@ -1,4 +1,4 @@
-<div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="tambah" aria-hidden="true">
+<div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="tambah"  data-backdrop="static" data-keyboard="false" stati aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

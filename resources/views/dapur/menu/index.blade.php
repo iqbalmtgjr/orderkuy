@@ -27,8 +27,7 @@
                                     width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
-                                        <circle fill="#000000" opacity="0.3" cx="12" cy="12"
-                                            r="10" />
+                                        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
                                         <path
                                             d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z"
                                             fill="#000000" />
@@ -107,16 +106,21 @@
 
         $(function() {
             var table = $('.data-table').DataTable({
-                // responsive: true,
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ url('/kelola_menu') }}",
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print'],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
+                },
                 columns: [{
-                        // data: 'id',
-                        // name: 'id',
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false,
+                        title: 'No'
                     },
                     {
                         data: 'foto',
@@ -132,23 +136,27 @@
                     },
                     {
                         data: 'harga',
-                        name: 'harga'
+                        name: 'harga',
+                        render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
                     },
                     {
                         data: 'qty',
-                        name: 'qty'
+                        name: 'qty',
+                        title: 'Stock'
                     },
                     {
                         data: 'aksi',
                         name: 'aksi',
                         orderable: false,
-                        searchable: false,
+                        searchable: false
                     }
                 ],
                 order: [
-                    [0, "desc"]
+                    [0, 'desc']
                 ]
             });
+
+            table.buttons().container().appendTo('#your-toolbar-container');
         });
     </script>
 @endsection
