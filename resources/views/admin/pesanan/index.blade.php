@@ -17,11 +17,10 @@
                     </div>
                     <div class="card-toolbar">
                         <!--begin::Button-->
-                        {{-- <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#tambah">
+                        <a href="{{ route('pesanan.create') }}" class="btn btn-primary font-weight-bolder">
                             <span class="svg-icon svg-icon-md">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
                                         <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
@@ -31,33 +30,55 @@
                                     </g>
                                 </svg>
                                 <!--end::Svg Icon-->
-                            </span>Tambah Meja</button> --}}
+                            </span>
+                            Tambah Pesanan
+                        </a>
                         <!--end::Button-->
                     </div>
                 </div>
                 <div class="card-body">
                     <!--begin: Datatable-->
-                    <div class="row gy-4">
-                        @foreach ($data as $key => $item)
-                            <div class="col-md-4">
-                                <div class="card shadow-sm" style="width: 100%;">
-                                    <div class="card-header text-white bg-primary">
-                                        <h5 class="card-title mb-0">Meja {{ $item[0]->meja->no_meja }}</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($item as $key => $i)
-                                                <li class="list-group-item">
-                                                    <strong>{{ $key + 1 }}. Menu:</strong>
-                                                    {{ $i->menu->nama_produk }}<br>
-                                                    <strong>Jumlah:</strong> {{ $i->jumlah }}<br>
-                                                    <strong>Catatan:</strong> {{ $i->catatan ? $i->catatan : '-' }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                    <div class="row gy-5 py-3">
+                        @foreach ($data as $user_id => $orders)
+                            @foreach ($orders as $order)
+                                <div class="col-md-4">
+                                    <div class="card shadow-sm mt-5 mb-5" style="width: 100%;">
+                                        <div
+                                            class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 class="card-title mb-0">Meja {{ $order->meja->no_meja }}</h5>
+                                                <small
+                                                    class="text-white-50">{{ date('Y-m-d H:i', strtotime($order->created_at)) }}</small>
+                                            </div>
+                                            <div class="card-toolbar">
+                                                <a href="{{ route('pesanan.show', $order->id) }}"
+                                                    class="btn btn-sm btn-light btn-icon" title="Detail">
+                                                    <i class="la la-eye"></i>
+                                                </a>
+                                                <a href="{{ route('pesanan.edit', $order->id) }}"
+                                                    class="btn btn-sm btn-light btn-icon" title="Edit">
+                                                    <i class="la la-edit"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                @foreach ($order->carts as $key => $cart)
+                                                    <li class="list-group-item">
+                                                        <strong>{{ $key + 1 }}. Menu:</strong>
+                                                        {{ $cart->menu->nama_produk ?? '-' }}<br>
+                                                        <strong>Jumlah:</strong> {{ $cart->qty }}<br>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            <hr>
+                                            <strong>Catatan:</strong> {{ $order->catatan ?? '-' }}<br>
+                                            <strong>Total Bayar:</strong>
+                                            Rp{{ number_format($order->bill->total_bayar ?? 0, 0, ',', '.') }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         @endforeach
                     </div>
                     <!--end: Datatable-->

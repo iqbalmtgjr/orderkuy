@@ -26,4 +26,16 @@ class Order extends Model
     {
         return $this->belongsTo(Meja::class);
     }
+
+
+    public function carts()
+    {
+        return $this->hasMany(\App\Models\Cart::class);
+    }
+
+    public function bill()
+    {
+        return $this->hasOne(\App\Models\Bill::class, 'order_makanan_id');
+    }
+
 }
