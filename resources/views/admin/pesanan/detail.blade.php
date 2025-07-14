@@ -13,91 +13,52 @@
 @section('content')
     <div class="row px-5">
         {{-- kiri: Daftar Menu --}}
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card card-custom">
-                <div class="card-header">
-                    <h3 class="card-title">Daftar Menu</h3>
+                <div class="card-header bg-primary">
+                    <h3 class="card-title text-white">Detail Pesanan</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Nama Menu</th>
                                 <th>Harga</th>
-                                <th>Stok</th>
                                 <th>Qty</th>
-                                <th>Aksi</th>
+                                <th>Sub Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($menus as $menu)
-                                <tr data-id="{{ $menu->id }}" data-nama_produk="{{ $menu->nama_produk }}"
-                                    data-harga="{{ $menu->harga }}" data-stok="{{ $menu->qty }}"> {{-- Simpan stok asli di data attribute --}}
-                                    {{-- <td>
-                                        @if ($menu->foto)
-                                            <img src="{{ asset('assets/img/menu/' . $menu->foto) }}" alt="Foto"
-                                                width="60" class="img-thumbnail">
-                                        @else
-                                            <span class="text-muted">-</span>
-                                        @endif
-                                    </td> --}}
-                                    <td>{{ $menu->nama_produk }}</td>
-                                    <td>Rp{{ number_format($menu->harga) }}</td>
-                                    <td>{{ $menu->qty }}</td>
-                                    <td width="100">
-                                        <input type="number" min="1" class="form-control qty-input" value="1">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-primary btn-add"><i
-                                                class="fa fa-plus text-white"></i></button>
-                                    </td>
+                            @php
+                                $total = 0;
+                            @endphp
+                            @foreach ($order->carts as $item)
+                                <tr>
+                                    <td>{{ $item->menu->nama_produk }}</td>
+                                    <td>Rp{{ number_format($item->harga) }}</td>
+                                    <td class="text-center">{{ $item->qty }}</td>
+                                    <td class="text-right">Rp{{ number_format($item->harga * $item->qty) }}</td>
                                 </tr>
-                            @endforeach
+                                @php
+                                    $total += $item->harga * $item->qty;
+                                @endphp
+                            @endforeachS
+                            <tr class="bg-gray-200">
+                                <th colspan="3" class="text-right">Total</th>
+                                <th class="text-right">Rp{{ number_format($total) }}</th>
+                            </tr>
                         </tbody>
                     </table>
+                    <tr>
+                        <td colspan="4" class="text-right">
+                            <a href="{{ route('pesanan.index') }}" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Kembali
+                            </a>
+                        </td>
+                    </tr>
+
                 </div>
             </div>
-        </div>
-        {{-- kanan: Form Pemesanan --}}
-        <div class="col-md-6">
-            <form action="{{ route('pesanan.store') }}" method="POST" id="formPesanan">
-                @csrf
-                <div class="card card-custom">
-                    <div class="card-header">
-                        <h3 class="card-title">Form Pesanan</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Pilih Meja</label>
-                            <select name="meja_id" class="form-control">
-                                <option value="">-- Pilih Meja --</option>
-                                @foreach ($mejas as $meja)
-                                    <option value="{{ $meja->id }}">Meja Nomor {{ $meja->no_meja }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Catatan Umum</label>
-                            <textarea name="catatan" class="form-control" rows="2" placeholder="Catatan umum pesanan..."></textarea>
-                        </div>
-
-                        <hr>
-                        <h4>Item yang Dipilih</h4>
-                        <div id="selectedItems"></div>
-
-                        <div class="mt-4 d-flex justify-content-end text-right">
-                            <div>
-                                <div><strong>Total Item:</strong> <span id="totalItem">0</span></div>
-                                <div><strong>Total Harga:</strong> Rp <span id="totalHarga">0</span></div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary mt-4 justify-content-end text-right">Simpan
-                            Pesanan</button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 @endsection

@@ -19,7 +19,7 @@ class PesananController extends Controller
     public function index(Request $request)
     {
         $data = Order::with('carts.menu', 'bill') // <- tambahkan eager load relasi
-            ->where('toko_id', auth()->user()->admin->toko->id)
+            ->where('toko_id', auth()->user()->kasir->toko->id)
             ->whereDate('created_at', now()->toDateString())
             ->get()
             ->groupBy('user_id');
@@ -45,8 +45,16 @@ class PesananController extends Controller
     // fungsi create
     public function create()
     {
-        $menus = Menu::where('toko_id', auth()->user()->admin->toko_id)->get();
-        $mejas = Meja::where('toko_id', auth()->user()->admin->toko_id)->get();
+        $menus = Menu::where('toko_id', auth()->user()->kasir->toko_id)->get();
+
+        // biar kalau order baru meja yang udh ada orang tidak muncul lagi
+        $mejas = Meja::where('toko_id', auth()->user()->kasir->toko_id)
+            ->whereNotIn('id', function ($query) {
+                $query->select('meja_id')
+                    ->from('order')
+                    ->whereDate('created_at', now()->toDateString());
+            })
+            ->get();
         return view('admin.pesanan.create', compact('menus', 'mejas'));
     }
 
@@ -74,7 +82,7 @@ class PesananController extends Controller
 
         // Buat order baru
         $order = Order::create([
-            'toko_id' => auth()->user()->admin->toko_id,
+            'toko_id' => auth()->user()->kasir->toko_id,
             'user_id' => auth()->id(),
             'meja_id' => $request->meja_id,
             'jenis_order' => 1,
@@ -92,7 +100,7 @@ class PesananController extends Controller
             $subtotal = $harga * $qty;
 
             Cart::create([
-                'toko_id' => auth()->user()->admin->toko_id,
+                'toko_id' => auth()->user()->kasir->toko_id,
                 'user_id' => auth()->id(),
                 'menu_id' => $menu_id,
                 'qty' => $qty,
@@ -102,6 +110,9 @@ class PesananController extends Controller
             ]);
 
             $total += $subtotal;
+
+            // kurangi stok
+            $menu->decrement('qty', $request->qty[$index]);
         }
 
         // Buat Bill untuk pesanan ini
@@ -129,7 +140,7 @@ class PesananController extends Controller
     //     }
 
     //     Order::create([
-    //         'toko_id' => auth()->user()->admin->toko_id,
+    //         'toko_id' => auth()->user()->kasir->toko_id,
     //         'no_meja' => $request->no_meja,
     //     ]);
     //     return redirect()->back()->with('sukses', 'Data Berhasil Diinput!');
@@ -139,8 +150,10 @@ class PesananController extends Controller
     public function show($id)
     {
         $order = Order::with(['carts.menu', 'bill', 'meja'])
-            ->where('toko_id', auth()->user()->admin->toko->id)
+            ->where('toko_id', auth()->user()->kasir->toko->id)
             ->findOrFail($id);
+
+        // dd($order->carts->menu);
 
         return view('admin.pesanan.detail', compact('order'));
     }
@@ -148,11 +161,11 @@ class PesananController extends Controller
     public function edit($id)
     {
         $order = Order::with(['carts.menu', 'bill', 'meja'])
-            ->where('toko_id', auth()->user()->admin->toko->id)
+            ->where('toko_id', auth()->user()->kasir->toko->id)
             ->findOrFail($id);
 
-        $menus = Menu::where('toko_id', auth()->user()->admin->toko_id)->get();
-        $mejas = Meja::where('toko_id', auth()->user()->admin->toko_id)->get();
+        $menus = Menu::where('toko_id', auth()->user()->kasir->toko_id)->get();
+        $mejas = Meja::where('toko_id', auth()->user()->kasir->toko_id)->get();
 
         return view('admin.pesanan.edit', compact('order', 'menus', 'mejas'));
     }
@@ -178,7 +191,7 @@ class PesananController extends Controller
                 ->with('gagal', 'Ada Kesalahan Saat Penginputan!');
         }
 
-        $order = Order::where('toko_id', auth()->user()->admin->toko_id)->findOrFail($id);
+        $order = Order::where('toko_id', auth()->user()->kasir->toko_id)->findOrFail($id);
 
         // Update data utama
         $order->update([
@@ -200,7 +213,7 @@ class PesananController extends Controller
             $subtotal = $harga * $qty;
 
             Cart::create([
-                'toko_id' => auth()->user()->admin->toko_id,
+                'toko_id' => auth()->user()->kasir->toko_id,
                 'user_id' => auth()->id(),
                 'menu_id' => $menu_id,
                 'qty' => $qty,
@@ -210,6 +223,9 @@ class PesananController extends Controller
             ]);
 
             $total += $subtotal;
+
+            // kurangi stok
+            $menu->decrement('qty', $request->qty[$index]);
         }
 
         Bill::create([

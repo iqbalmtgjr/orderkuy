@@ -7,12 +7,12 @@
     <!--begin::Entry-->
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
-        <div class="container">
+        <div class="container-fluid">
             <!--begin::Card-->
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">
                     <div class="card-title">
-                        <h3 class="card-label">Data Pesanan {{ auth()->user()->admin->toko->nama_toko }}
+                        <h3 class="card-label">Data Pesanan {{ auth()->user()->kasir->toko->nama_toko }}
                         </h3>
                     </div>
                     <div class="card-toolbar">
@@ -62,19 +62,26 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                @foreach ($order->carts as $key => $cart)
-                                                    <li class="list-group-item">
-                                                        <strong>{{ $key + 1 }}. Menu:</strong>
-                                                        {{ $cart->menu->nama_produk ?? '-' }}<br>
-                                                        <strong>Jumlah:</strong> {{ $cart->qty }}<br>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                            <hr>
-                                            <strong>Catatan:</strong> {{ $order->catatan ?? '-' }}<br>
-                                            <strong>Total Bayar:</strong>
-                                            Rp{{ number_format($order->bill->total_bayar ?? 0, 0, ',', '.') }}
+                                            <a class="btn btn-sm btn-light" data-toggle="collapse"
+                                                href="#carts{{ $order->id }}" role="button" aria-expanded="false"
+                                                aria-controls="carts{{ $order->id }}">
+                                                <strong>Lihat/Sembunyikan Pesanan</strong>
+                                            </a>
+                                            <div class="collapse" id="carts{{ $order->id }}">
+                                                <ul class="list-group list-group-flush mt-3">
+                                                    @foreach ($order->carts as $key => $cart)
+                                                        <li class="list-group-item">
+                                                            <strong>{{ $key + 1 }}. Menu:</strong>
+                                                            {{ $cart->menu->nama_produk ?? '-' }}<br>
+                                                            <strong>Jumlah:</strong> {{ $cart->qty }}<br>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                <hr>
+                                                <strong>Catatan:</strong> {{ $order->catatan ?? '-' }}<br>
+                                                <strong>Total Bayar:</strong>
+                                                Rp{{ number_format($order->bill->total_bayar ?? 0, 0, ',', '.') }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
