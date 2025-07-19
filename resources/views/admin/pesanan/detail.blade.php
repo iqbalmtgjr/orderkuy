@@ -42,7 +42,7 @@
                                 @php
                                     $total += $item->harga * $item->qty;
                                 @endphp
-                            @endforeachS
+                            @endforeach
                             <tr class="bg-gray-200">
                                 <th colspan="3" class="text-right">Total</th>
                                 <th class="text-right">Rp{{ number_format($total) }}</th>
