@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('toko_id')->constrained('toko')->onDelete('cascade');
             $table->foreignId('meja_id')->constrained('meja')->onDelete('cascade');
-            $table->foreignId('menu_id')->constrained('menu')->onDelete('cascade');
+            // $table->foreignId('menu_id')->constrained('menu')->onDelete('cascade');
             $table->integer('jumlah');
             $table->integer('jenis_order');
             $table->string('catatan')->nullable();

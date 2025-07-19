@@ -13,12 +13,16 @@
 @section('content')
     <div class="row px-5">
         {{-- kiri: Daftar Menu --}}
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card card-custom">
                 <div class="card-header">
                     <h3 class="card-title">Daftar Menu</h3>
                 </div>
                 <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Cari Menu..." wire:model="searchTerm">
+                    </div>
+
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -59,7 +63,7 @@
             </div>
         </div>
         {{-- kanan: Form Pemesanan --}}
-        <div class="col-md-6">
+        <div class="col-md-4">
             <form action="{{ route('pesanan.store') }}" method="POST" id="formPesanan">
                 @csrf
                 <div class="card card-custom">
