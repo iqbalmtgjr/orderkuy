@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('super_admin', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('username')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('no_hp')->nullable();

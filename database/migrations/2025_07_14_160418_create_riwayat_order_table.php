@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('riwayat_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('toko_id');
-            $table->foreignId('user_id');
+            $table->foreignId('toko_id')->constrained('toko')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('no_meja');
             $table->string('nama_produk');
             $table->string('kategori');

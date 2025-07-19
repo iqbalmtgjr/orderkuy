@@ -1,5 +1,5 @@
 <body id="kt_body"
-    class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading {{ request()->routeIs('pesanan.index') ? 'aside-minimize' : '' }}">
+    class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading {{ request()->routeIs('pesanan.index') || request()->routeIs('pesanan.create') || request()->routeIs('pesanan.edit') || request()->routeIs('pesanan.show') ? 'aside-minimize' : '' }}">
     <!--begin::Main-->
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">

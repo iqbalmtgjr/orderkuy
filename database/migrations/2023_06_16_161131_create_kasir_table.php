@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('kasir', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('toko_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('toko_id')->constrained('toko')->onDelete('cascade');
             $table->string('username')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('no_hp')->nullable();

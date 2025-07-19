@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('meja', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('toko_id');
+            $table->foreignId('toko_id')->constrained('toko')->onDelete('cascade');
             $table->integer('no_meja')->unique();
             $table->integer('status')->nullable();
             $table->timestamps();

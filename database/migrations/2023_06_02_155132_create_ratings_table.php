@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('menu_id');
-            $table->foreignId('order_makanan_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('menu_id')->constrained('menu')->onDelete('cascade');
+            $table->foreignId('order_makanan_id')->constrained('order')->onDelete('cascade');
             $table->integer('stars_rated');
             $table->timestamps();
         });
